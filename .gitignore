@@ -13,6 +13,7 @@ custom_*
 *.userdb/
 luna*
 
+*.txt
 tmp_bak/
 zipped_ext_dicts/
 lua/colloctions/
