@@ -1,0 +1,91 @@
+# Rime schema
+# encoding: utf-8
+
+
+### ### ### ###
+
+主词典: &main_dict                       kongmingma
+
+反查词典: &reverse_lookup_dict           flypy_light
+反查词典所挂方案: &reverse_lookup_schema  flypy_light
+
+### ### ### ###
+
+
+schema:
+  schema_id: kmm
+  name: 空明码
+#  icon: icons/kongmingma.ico
+  version: 2024-04-13
+  author:
+    - 曌（空明码方案设计维护者）
+    - zhanghaozhecn (Rime方案配置初始编写)
+    - 叫我最右君（Rime方案改进维护）
+  description: |
+    空明码，是专为并击设计的编码方案，大词库(38万)，码长短(平均0.8)，8万高频词重码少(0.09%)。
+#  dependencies:
+#    - *reverse_lookup_schema
+
+
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [ 中, 英 ]
+
+
+engine:
+  processors:
+    - ascii_composer
+    - key_binder
+    - speller
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - abc_segmentor
+  translators:
+    - table_translator
+#    - table_translator@stabledb_dict_translator
+    - table_translator@tmp_en_mode
+  filters:
+    - uniqufier
+
+
+menu:
+  page_size: 5
+
+
+translator:
+  dictionary: kongmingma
+  enable_completion: true
+  enable_encoder: false
+  enable_sentence: false
+  enable_user_dict: false
+
+
+#stabledb_dict_translator:
+#  dictionary: ""
+#  user_dict: *main_dict
+#  db_class: stabledb
+#  enable_completion: true
+#  enable_sentence: false
+
+
+speller:
+  auto_select: true
+  alphabet: QWERTYUIOPASDFGHJKL:ZXCVBNM<>?qwertyuiopasdfghjkl;zxcvbnm,./1234567890!@&*_'"%~
+
+
+key_binder:
+  bindings:
+    - { accept: bracketleft, send: Page_Up, when: paging } # [上翻页
+#    - { accept: bracketleft, send: Page_Up, when: has_menu }
+    - { accept: bracketright, send: Page_Down, when: has_menu } # ]下翻页
+
+
+ascii_composer:
+  good_old_caps_lock: false
+  switch_key:
+    Shift_L: commit_code
+    Shift_R: commit_code
