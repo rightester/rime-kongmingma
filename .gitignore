@@ -13,10 +13,9 @@ squirrel*
 *custom.*
 custom_*
 *.userdb/
-luna*
 
 # My own used files
-*.txt
+/*.txt
 tmp_bak/
 zipped_ext_dicts/
 lua/collections/
