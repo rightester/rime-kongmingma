@@ -93,7 +93,7 @@ engine:
     - table_translator@tmp_schema_mode
     - table_translator@tmp_en_mode
   filters:
-    - lua_filter@*cand_escape_filter
+#    - lua_filter@*cand_escape_filter
     - lua_filter@*force_select
     - lua_filter@reverse_lookup_filter_when_tmp_schema_mode
     - lua_filter@char_first_cands_sort_filter
