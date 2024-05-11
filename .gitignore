@@ -19,7 +19,7 @@ luna*
 *.txt
 tmp_bak/
 zipped_ext_dicts/
-lua/colloctions/
+lua/collections/
 *.exe
 *.bat
 *.lnk
