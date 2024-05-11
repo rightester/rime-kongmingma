@@ -1,4 +1,5 @@
 
+# Rime's user-specified files
 build/
 logs/
 preview/
@@ -6,6 +7,7 @@ icons/
 installation.yaml
 user.yaml
 
+# Rime distribution's files and custom files
 weasel*
 squirrel*
 *custom.*
@@ -13,6 +15,7 @@ custom_*
 *.userdb/
 luna*
 
+# My own used files
 *.txt
 tmp_bak/
 zipped_ext_dicts/
@@ -21,5 +24,15 @@ lua/colloctions/
 *.bat
 *.lnk
 
+# Syncthing used files
 .stfolder/
 .stignore
+
+# Files exclude for now, may add back when needed later
+grammar.yaml
+*.gram
+空明.trime.yaml
+flypy_light.*.yaml
+#kmm.*.yaml
+kongmingma*dict*
+kongmingma_phony*
