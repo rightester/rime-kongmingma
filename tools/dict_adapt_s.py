@@ -1,3 +1,5 @@
+#串击用的词典分割
+
 import sys
 import re
 import time
