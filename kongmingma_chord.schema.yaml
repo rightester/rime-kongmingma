@@ -71,8 +71,8 @@ engine:
 #    - lua_processor@*key_event_inspector2@after_inspector
 #    - ks_processor@lua_processor@*chord_composer
 #    - lua_processor@*chord_composer_old
-    - lua_processor@*chord_composer
-#    - chord_composer
+#    - lua_processor@*chord_composer
+    - chord_composer
     - key_binder
     - speller
 #    - lua_processor@wrap_speller
