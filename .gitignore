@@ -17,8 +17,11 @@ custom_*
 # My own used files
 /*.txt
 tmp_bak/
+*.bak
 zipped_ext_dicts/
 lua/collections/
+tools/dict/old/
+tools/dict/output/
 *.exe
 *.bat
 *.lnk
@@ -27,7 +30,7 @@ lua/collections/
 .stfolder/
 .stignore
 
-# Files exclude for now, may add back when needed later
+# Files excluded for now, may add back when needed later
 grammar.yaml
 *.gram
 空明.trime.yaml

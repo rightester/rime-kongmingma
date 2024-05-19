@@ -47,7 +47,6 @@ engine:
   translators:
     - table_translator
 #    - table_translator@stabledb_dict_translator
-    - table_translator@tmp_en_mode
   filters:
     - uniqufier
 
@@ -57,7 +56,7 @@ menu:
 
 
 translator:
-  dictionary: kongmingma
+  dictionary: kmm
   enable_completion: true
   enable_encoder: false
   enable_sentence: false
@@ -74,7 +73,7 @@ translator:
 
 speller:
   auto_select: true
-  alphabet: QWERTYUIOPASDFGHJKL:ZXCVBNM<>?qwertyuiopasdfghjkl;zxcvbnm,./1234567890!@&*_'"%~
+  alphabet: QWERTYUIOPASDFGHJKL:ZXCVBNM<>?qwertyuiopasdfghjkl;zxcvbnm,./1234567890_~!@%&*'"
 
 
 key_binder:

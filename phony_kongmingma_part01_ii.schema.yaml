@@ -1,0 +1,17 @@
+# Rime schema
+# encoding: utf-8
+
+schema:
+  schema_id: phony_kongmingma_part01_ii
+  name: 伪方案 kongmingma_part01_ii
+  description: 用于词典部署
+
+engine:
+  translators:
+    - table_translator
+
+translator:
+  dictionary: kongmingma_part01_ii
+  enable_user_dict: false
+  enable_sentence: false
+  enable_encoder: false

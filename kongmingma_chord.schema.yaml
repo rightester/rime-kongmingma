@@ -13,11 +13,7 @@ schema:
   schema_id: kongmingma_chord
   name: 空明码并击
 #  icon: icons/kongmingma.ico
-#  version: 2023/07/28
-#  version: 2024/01/16
-#  version: 2024/01/18
-#  version: 2024/01/23
-  version: 2024/01/25
+  version: 2024/05/12
   author:
     - 曌（空明码方案设计维护者）
     - zhanghaozhecn (Rime方案配置初始编写)
@@ -25,16 +21,16 @@ schema:
   description: |
     空明码，是专为并击设计的编码方案，大词库(38万)，码长短(平均0.8)，8万高频词重码少(0.09%)。
   dependencies:
-    - kongmingma_phony_part_user
-    - kongmingma_phony_part00
-    - kongmingma_phony_part01_char
-    - kongmingma_phony_part01_ii
-    - kongmingma_phony_part01_symbols
-    - kongmingma_phony_part02
-    - kongmingma_phony_part03
-    - kongmingma_phony_part04
-    - kongmingma_phony_part06
-    - kongmingma_phony_part99
+    - phony_kongmingma_part_user
+    - phony_kongmingma_part00
+    - phony_kongmingma_part01_char
+    - phony_kongmingma_part01_ii
+    - phony_kongmingma_part01_sym
+    - phony_kongmingma_part02+03
+    - phony_kongmingma_part04
+    - phony_kongmingma_part05
+    - phony_kongmingma_part06
+    - phony_kongmingma_part99
     - *reverse_lookup_schema
 
 switches:
@@ -44,79 +40,39 @@ switches:
   - name: force_select_mode
     reset: 1
     states: [ 默认无重上屏, 强制四码上屏 ]
-#  - states: [ 关, 开 ]
-#    reset: 0
-#    name: soft_cursor
 
 engine:
-  processors_test:
-#  processors:
-    - ascii_composer
-    - recognizer
-#    - lua_processor@*key_event_inspector@before_chord_inspector
-    - lua_processor@*chord_composer
-    - speller
-    - express_editor
-#    - lua_processor@*key_event_inspector2@after_inspector
-#  processors_bak:
   processors:
     - lua_processor@*disable_soft_cursor
-#    - lua_processor@set_soft_cursor
     - ascii_composer
-#    - lua_processor@*schema_switcher
-#    - lua_processor@*redispatcher
-#  redispatched_processors:
-    - recognizer
-#    - lua_processor@*key_event_inspector@before_chord_inspector
-#    - lua_processor@*key_event_inspector2@after_inspector
-#    - ks_processor@lua_processor@*chord_composer
-#    - lua_processor@*chord_composer_old
-#    - lua_processor@*chord_composer
     - chord_composer
-    - key_binder
+    - lua_processor@*chord_command_handler
+    - recognizer
     - speller
-#    - lua_processor@wrap_speller
-#    - lua_processor@*key_event_inspector@before_selector
+    - key_binder
     - selector
     - navigator
     - express_editor
-#    - lua_processor@*key_event_inspector2@after_inspector
-#    - lua_processor@*commit_recorder
   segmentors:
     - matcher
     - abc_segmentor
     - affix_segmentor@tmp_schema_mode
     - affix_segmentor@tmp_en_mode
   translators:
-#    - lua_translator@*txtdict_translator
     - lua_translator@*main_translator
     - table_translator@tmp_schema_mode
     - table_translator@tmp_en_mode
   filters:
-#    - lua_filter@*cand_escape_filter
     - lua_filter@*force_select
     - lua_filter@reverse_lookup_filter_when_tmp_schema_mode
     - lua_filter@char_first_cands_sort_filter
     - lua_filter@ensure_uniquifier
-    - lua_filter@insert_repeat_cand_when_tmp_schema_mode
-    
-
-menu:
-  alternative_select_labels: ["壹", " 二", " 三", " 四", " 五", " 六", " 七", " 八", " 九", " 十"]
-  page_size: 5
-
-
 
 
 speller:
-#############################
-  # 无后续编码自动上屏，需配合enable_completion
   auto_select: true
 #  auto_select: false
-#################################
-  # 要处理成输入码的按键
-  alphabet: QWERTYUIOPASDFGHJKL:ZXCVBNM<>?qwertyuiopasdfghjkl;zxcvbnm,./1234567890%~@*&_"
-#  algebra:
+  alphabet: QWERTYUIOPASDFGHJKL:ZXCVBNM<>?qwertyuiopasdfghjkl;zxcvbnm,./1234567890_~!@%&*'"
 
 
 recognizer:
@@ -150,9 +106,6 @@ tmp_schema_mode:
   enable_user_dict: false
 
 
-
-
-
 reverse_lookup_filter_when_tmp_schema_mode:
   tags: [ tmp_schema_mode ]
   dicts_to_reverse_lookup:
@@ -160,29 +113,19 @@ reverse_lookup_filter_when_tmp_schema_mode:
     - kongmingma_part00
     - kongmingma_part01_char
     - kongmingma_part01_ii
-    - kongmingma_part01_symbols
-    - kongmingma_part02
-    - kongmingma_part03
+    - kongmingma_part01_sym
+    - kongmingma_part02+03
     - kongmingma_part04
+    - kongmingma_part05
     - kongmingma_part06
     - kongmingma_part99
 
-insert_repeat_cand_when_tmp_schema_mode:
-  tags: [ tmp_schema_mode ]
 
-
-
-
-#schema_switcher:
-#  target_schema: flypy_custom
-#  trigger_keys: Shift+Control+Release+exclam # Ctrl+Shift+1
-
-#before_chord_inspector:
-#  log_level: info
 
 
 
 # 拆分词典和翻译器
+
 
 kongmingma_part_user:
   dictionary: kongmingma_part_user
@@ -202,10 +145,6 @@ kongmingma_part01_char:
   enable_sentence: false
   enable_encoder: false
   enable_user_dict: false
-#  enable_sentence: true
-#  enable_encoder: true
-#  enable_user_dict: true
-#  db_class: tabledb
 
 kongmingma_part01_ii:
   dictionary: kongmingma_part01_ii
@@ -213,26 +152,26 @@ kongmingma_part01_ii:
   enable_sentence: false
   enable_user_dict: false
 
-kongmingma_part01_symbols:
-  dictionary: kongmingma_part01_symbols
+kongmingma_part01_sym:
+  dictionary: kongmingma_part01_sym
   enable_encoder: false
   enable_sentence: false
   enable_user_dict: false
 
-kongmingma_part02:
-  dictionary: kongmingma_part02
-  enable_encoder: false
-  enable_sentence: false
-  enable_user_dict: false
-
-kongmingma_part03:
-  dictionary: kongmingma_part03
+kongmingma_part02+03:
+  dictionary: kongmingma_part02+03
   enable_encoder: false
   enable_sentence: false
   enable_user_dict: false
 
 kongmingma_part04:
   dictionary: kongmingma_part04
+  enable_encoder: false
+  enable_sentence: false
+  enable_user_dict: false
+
+kongmingma_part05:
+  dictionary: kongmingma_part05
   enable_encoder: false
   enable_sentence: false
   enable_user_dict: false
@@ -268,11 +207,15 @@ kongmingma_part99:
 
 chord_composer:
   
-  finish_chord_on_first_key_release: false
 #  finish_chord_on_first_key_release: true #有一键被释放时立刻触发合成
-#  finish_trigger_release_num: 3
   
-  alphabet: qazwsxedcrfvtgb12345yhnujmik,ol.p;/67890'=`[ -\]
+  alphabet: qazwsxedcrfvtgb12345yhnujmik,ol.p;/67890'=[`\-{space}]
+#  alphabet: qazwsxedcrfvtgb12345yhnujmik,ol.p;/67890'=`[ -\]
+# qazwsxedcrfvtgb
+# 12345
+# yhnujmik,ol.p;/
+# 67890
+# '=`[ -\]
   
   algebra:
   
@@ -281,17 +224,29 @@ chord_composer:
     # 预处理
       #
       # 声明空格所用的按键和其易于表达的变换编码
-#    - xlit| |中| # 中间的空格
-    - xlit|'|一| # 左手空格
-    - xlit|=|二| # 左手次空格
-#    - xlit|`|三| # 左手三空格
-#    - xlit|[|四| # 左手四空格
-    - xlit| |壹| # 右手空格
-    - xlit|-|贰| # 右手次空格
-#    - xlit|\|叁| # 右手三空格
-#    - xlit|]|肆| # 右手四空格
-      # 这里启用了6个空格，理论上如果你还有空格可以再加，做空格的键不一样也可以直接改
-      # 增加空格需要在前面的字母表那里（允许接受并击的按键列表）添加
+      # 增加空格还需在前面的字母表（允许接受并击的按键列表）中期添加
+      
+    - xform|'|一_| # 左手空格
+    - xform|=|二_| # 左手次空格
+#    - xform|`|三_| # 左手三空格
+#    - xform|[|四_| # 左手四空格
+
+    - xform|`|中| # 中间的空格
+    - xform|\\|中| # 中间的空格
+
+    - xform| |_一| # 右手空格
+    - xform|-|_二| # 右手次空格
+#    - xform|\\|_三| # 右手三空格
+#    - xform|]|_四| # 右手四空格
+
+    # 处理可能的空格区重复编码，根据需要自行开启，也可以不开启以利用某些特性
+    - xform/(中)+/中/
+#    - xform/((一_)|(_一))+/$1/
+#    - xform/((二_)|(_二))+/$1/
+#    - xform/((三_)|(_三))+/$1/
+#    - xform/((四_)|(_四))+/$1/
+#    - xform/((五_)|(_五))+/$1/
+    
     #
     
     #上面这部分可以放在外部配置，读取了再插入chord_composer
@@ -299,6 +254,7 @@ chord_composer:
     
     
     
+    # 预处理区
     
     # 符号和数字映射为大写字母，分离其转义干扰
     - xlit|;,./|ACXZ|
@@ -308,19 +264,26 @@ chord_composer:
     - xform/([qwertasdfgzxcvb12345]+)/<$1>/
       # 右手编码包装
     - xform/([yuiophjklAnmCXZ67890]+)/<$1>/
-      # 空格区编码包装，并且完成无空格的时候补一个<无>标签
-    - xform/^(.*)$/$1<无>/
-    - xform/([一二三四五中壹贰叁肆伍]+)<无>/<$1>/
-    #
+    
+    # 包装空格区编码
+      # 包裹成： <"左_右>、<"左中>、<"中右>、<"左中右> <"_右> <"左_> <"中>的形式，例如从： 一_二__二_一 、 一_二_中 、 中_二_一 、 一_ 二_中_二_一 、 _二_一 、 一_二_ 、 中  这些形式里变换
+    - xform/([_中一二三四五]+)/<"$1>/
+      # 处理只存在左或右的情况
+    - xform/<"(.*)_>/<"$1::>/
+    - xform/<"_(.*)>/<"::$1>/
+      # 处理左(中)右都存在的情况
+    - xform/_((中)?)_/:$1:/
+    - xform/_//
+    - xform/::/_/
+    - xform/:(.*):/$1/
+    
+      # 无空格的时候补一个<"无>标签
+    - xform/^(.*)$/$1<"无>/
+    - xform/<"(.*)><"无>/<"$1>/
     
     # 处理单手击的表示（添加下划线，表示另一手未击）  #允许存在单手配左中右空格，允许单手数字区表示
-    - xform/^<([qwertasdfgzxcvb12345]+)><([无一二三四五中壹贰叁肆伍]*)>$/<$1>_<$2>/
-      # xx => xx_
-    - xform/^<([yuiophjklAnmCXZ67890]+)><([无一二三四五中壹贰叁肆伍]*)>$/_<$1><$2>/
-      # yy => _yy
-    #
-    
-
+    - xform/^<([qwertasdfgzxcvb12345]+)><"(.*)>$/<$1>_<"$2>/
+    - xform/^<([yuiophjklAnmCXZ67890]+)><"(.*)>$/_<$1><"$2>/
     
     
     ##########################################
@@ -329,6 +292,7 @@ chord_composer:
     
       # 大写字母部分指法映射(齐列)
 #    - xform=(<qv>|<mp>|<qg>|<hp>|<sef>|<jil>)=Q=  # 可以写成这样
+#    - xform_<qv>|<mp>_Q_
     - xform=(<qv>|<mp>)=Q=
     - xform=(<qg>|<hp>)=Q=
 #    - xform=(<sef>|<jil>)=Q=
@@ -438,10 +402,6 @@ chord_composer:
     - xform=(<jkl;>)=@=
 #    - xform=(<mCX>)=_=
 
-#    - xform=(<rt>_)={Delete}{Release+Delete}=
-#    - xform=(<rt>_)={BackSpace}{Release+BackSpace}=
-#    - xform=(<rt>_)={Delete}=
-
 
     # 主映射区结束
     
@@ -452,26 +412,15 @@ chord_composer:
     ########################################
 
     
-    - xform/^UU(<无>)$/<1>/
-    - xform/^II(<无>)$/<1>/
-#    - xform=(<xf>|<jX>)=<壹>=
-#    - xform/^uu(<无>)$/<2>/
-#    - xform/^VV(<无>)$/<3>/
-#    - xform/^<<(<无>)$/<2>/
-#    - xform/^>>(<无>)$/<3>/
-    - xform/^\?\?(<无>)$/<4>/
-    - xform/^::(<无>)$/<5>/
-    - xform/^&&(<无>)$/<6>/
-    - xform=^//(<无>)$=//=
-    - xform/^;;(<无>)$/;;/
-      #
-    - xform/^1i(<无>)$/<1>/
-    - xform/^2i(<无>)$/<2>/
-    - xform/^3i(<无>)$/<3>/
-    - xform/^4i(<无>)$/<4>/
+    - xform/^UU(<无>)$/<"1>/
+    - xform/^1i$/<"1>/
+    - xform/^2i$/<"2>/
+    - xform/^3i$/<"3>/
+    - xform/^4i$/<"4>/
 
     
     #
+    
       # 空格组合区
     - xform=(.)_<无>=$1_<"0>=
     - xform=_(.)<无>=_$1<"0>=
@@ -528,60 +477,19 @@ chord_composer:
     
     
     #
-
-    
-    #
-    
-    
-    #
-    ##
-    # 后处理
-    #
-    #
-    ##
+#    - xform=^.*(<"?[0-9]>)$=$1|$2|=
     
     # 并击合成后处理
-    - xform/<"0>//
-    - xform/<"1>/ /
-    - xform/<"2>/'/
-    - xform/<"3>/-/
-    - xform/<"4>/=/
-    - xform/<"5>/`/
-    - xform=<"6>=\=
+#    - xform/<"0>//
+#    - xform/<"1>/ /
+#    - xform/<"2>/'/
+#    - xform/<"3>/-/
+#    - xform/<"4>/=/
+#    - xform/<"5>/`/
+#    - xform=<"6>=\=
     
-    - xform/<0>//
-    - xform/<1>/ /
-    - xform/<2>/{KP_2}/
-    - xform/<3>/{KP_3}/
-    - xform/<4>/{KP_4}/
-    - xform/<5>/{KP_5}/
-    - xform/<6>/{KP_6}/
     
-#    - xform/<0>/0/
-#    - xform/<1>/1/
-#    - xform/<2>/2/
-#    - xform/<3>/3/
-#    - xform/<4>/4/
-#    - xform/<5>/5/
-#    - xform/<6>/6/
-
-#    - xform/<"0>/0/
-#    - xform/<"1>/1/
-#    - xform/<"2>/2/
-#    - xform/<"3>/3/
-#    - xform/<"4>/4/
-#    - xform/<"5>/5/
-#    - xform/<"6>/6/
     
-#    - xform/<"1>/"/
-#    - xform/<"2>/""/
-#    - xform/<"3>/"""/
-    
-#    - xform/_(`|~|\*|&|@|'|")/$1_/
-    - xform/^([0-9])([0-9])$/$1__$2/
-    - xform/<无>//
-    - xform/.*<.+>.*// #不要用erase，太奇怪了……
-      # 屏蔽未定义的指法
     
     
     
@@ -591,39 +499,38 @@ chord_composer:
 #    - xform/ /{space}{Release+space}/
 #    - xform/ /  /
 #    - xform/a_/a/
-    
-  
-    
-  output_format:
-    #输出后处理
-    # - xform/[0-9]//
-    - xform=，=__,=
-    - xform=。=__.=
-    - xform=、=__/=
-    - xform=；=__;=
-    - xform=！=__!=
-    - xform=？=__?=
-    
-#    - xform/(.+)/<$1>/
-#    - xform/<(.+)>/$1/
-    
+
+
+
   prompt_format:
     # 并击合成过程中指法提示
 #    - xlit/>/!/
 #    - xform/[0-9]//
     - xform/ /_/
+    - xlit/无一二三四五中/⓪①②③④⑤©/
+    
+#    - xform/(.+)/<$1>/
+#    - xform/<(.+)>/$1/
+
+
+
+  output_format:
+    #输出后处理
+    
+    - xform=(.*)<".*>=$1=
+    
+    - xform=(__)<.+>==
+    
+    - xform=^(.+)$=$1|0|= #使用竖线作为分界符
+    
+    - xform/^([0-9])([0-9])$/$1__$2/
+    - xform/<无>//
+    - xform/.*<.+>.*// #不要用erase，太奇怪了……
+      # 屏蔽未定义的指法
     
 #    - xform/(.+)/<$1>/
 #    - xform/<(.+)>/$1/
   
-#  extras:
-#    xxx_tag:
-#      prompt_format:
-#        - xform/(.+)/<$1>/
-#        - xform/<(.+)>/$1/
-#      output_format:
-#        - xform/(.+)/<$1>/
-#        - xform/<(.+)>/$1/
 
 
 
@@ -638,31 +545,7 @@ key_binder:
 #    - { accept: bracketleft, send: Page_Up, when: has_menu }
 #    - { accept: bracketright, send: Page_Down, when: has_menu } # ]下翻页
     - { when: composing, accept: BackSpace, send: Escape }
-#    - { when: composing, accept: Tab, send: Escape }
     - { when: composing, accept: Delete, send: BackSpace }
-#    - { when: always, accept: Delete, send: BackSpace }
-#    - { when: composing, accept: Escape, send: BackSpace }
-#    - { when: composing, accept: Return, send: space }
-#    - { when: composing, accept: apostrophe, send: quotedbl }
-#    - { accept: apostrophe, send: KP_2, when: composing }
-#    - { accept: bar, send: KP_2, when: composing }
-#    - { accept: bar, send: space, when: always }
-#    - { accept: quotedbl, send: space, when: always }
-#    - { accept: apostrophe, send: space, when: always }
-#    - { accept: apostrophe, send: space, when: composing }
-    ########
-#    - { when: composing, accept: space, send: KP_1 }
-#    - { when: composing, accept: apostrophe, send: KP_2 }
-#    - { when: composing, accept: equal, send: KP_3 }
-#    - { when: composing, accept: minus, send: KP_4 }
-#    - { when: composing, accept: grave, send: KP_5 }
-#    - { when: composing, accept: backslash, send: KP_6 }
-    ##########
-#    - { when: composing, accept: Shift+Shift_L, send: 2 }
-#    - { when: composing, accept: Shift+Shift_R, send: 3 }
-#    - {accept: Tab, send: Right, when: composing}
-#    - {accept: "Shift+Tab", send: Left, when: composing}
-# has_menu = 有候选栏项的时候，没候选项只有输入框的时候就是composing
 
 
 # 用Shift切换中英文
@@ -680,6 +563,7 @@ punctuator:
     "" : { commit: "" }
   half_shape:
     "" : { commit: "" }
+
 
 
 #要写在.custom.yaml文件里
