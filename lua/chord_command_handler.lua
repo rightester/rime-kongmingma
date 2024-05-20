@@ -30,6 +30,11 @@ local command_reprs = {}
 local is_receiving = false
 
 
+local symbols_map = {
+	",": "，",
+	".": "。",
+}
+
 --function init(env)
 --	local engine = env.engine
 --		assert(engine)
@@ -41,6 +46,10 @@ local is_receiving = false
 --end
 
 local function select_and_confirm(engine, index)
+	index = index - 1
+	if index<0 then
+		index = 0
+	end
 	local context = engine.context
 	if context:select(index) then
 		local cand = context:get_selected_candidate()
@@ -57,11 +66,24 @@ local function handle(engine, command)
 	local context = engine.context
 	local input_code = context.input
 	local len = string.len(string.gsub(input_code, '_', ''))
-	if len==1 then
-		if command == '0' then
-			select_and_confirm(engine, 0)
-			return
-		end
+	local choose = tonumber(string.sub(command, 1, 1))
+	local symbol = string.sub(command, 2)
+	if symbol then
+		select_and_conform(engine, choose)
+		engine:commit_text(symbols_map[symbol])
+		return
+	end
+	if len%2==1 then
+		select_and_confirm(engine, choose)
+		return
+	end
+	if len==4 and choose~=1 then
+		select_and_confirm(engine, choose)
+		return
+	end
+	if choose>0 then
+		select_and_confirm(engine, choose)
+		return
 	end
 end
 
