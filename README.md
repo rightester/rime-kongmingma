@@ -16,7 +16,7 @@
 - [x] lua_processor实现chord_composer的抬指立即释放的版本（librime>=1.10.0开始内置了此功能，可以不用插件）
 - [x] one.shp移植转换
 - [ ] 并击顶屏控制，使用handler来完成，不依赖speller/auto_select: true
-- [ ] 修复recognizer反查与chord_composer的冲突、修复i码反查与chord_composer的冲突
+- [ ] 修复recognizer反查/i码输入反查与chord_composer的冲突
 - [ ] 引入全拼（雾凇拼音），作为默认反查方案和备选输入方案（目前是自用的轻量小鹤音形方案和词库）
 - [ ] 发版1.0
 - [ ] 优化多个translator配置在方案中的写法，考虑在lua中动态传递处理配置而不是堆在.schema.yaml中
@@ -24,7 +24,7 @@
 - [ ] 退格一键回退一击的编码
 - [ ] 无编码时退格一键可选：回退上一击字数退格/发送Ctrl+Z
 - [ ] 扩展Rime，为Rime引入向系统重发送按键，实现外部光标/模拟按键操作
-- [ ] 速录宝用户词库迁移 (?
+- [ ] 速录宝 用户词库迁移 (?
 - [ ] 移植py脚本至Rust，使得用户可以双击执行
 - [ ] 用户初始化方案提示/lua调用确保初始化，初始化自动判断`MasterDict, one.shp, 指法文件, 速录宝用户词典`是否变化并按需更新Rime对应文件
 - [ ] 为Rime引入小胖平台的双检索功能
