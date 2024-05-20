@@ -488,35 +488,23 @@ chord_composer:
     # 处理双边数字上屏
     - xform/^([0-9])([0-9])$/$1__$2/
     
-    
-#    - xform/(.+)/<$1>/
-#    - xform/<(.+)>/$1/
-    
-#    - xform/ /{space}{Release+space}/
-#    - xform/ /  /
-#    - xform/a_/a/
 
 
 
 #  comment:
   prompt_format:
     # 并击合成过程中指法提示
-#    - xlit/>/!/
-#    - xform/[0-9]//
+    
     - xform=<"(.*)>=:$1=
     - xform=^ $=_=
     - xlit|一二|壹贰|
 #    - xlit/无壹贰三四五中/⓪①②③④⑤©/
     
-#    - xform/(.+)/<$1>/
-#    - xform/<(.+)>/$1/
 
 
 
   output_format:
     #输出后处理
-    
-#    - xform=(.*)<".*>=$1=
     
     
     # 使用竖线作为分界符
@@ -525,10 +513,6 @@ chord_composer:
     - xlit|；，。、|;,./|
     
     
-    
-#    - xform/(.+)/<$1>/
-#    - xform/<(.+)>/$1/
-  
 
 
 
