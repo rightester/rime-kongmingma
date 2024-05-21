@@ -10,7 +10,7 @@
 
 
 local lw = function(...) end
---lw = log.warning -- 打印日志
+lw = log.warning -- 打印日志
 
 
 local kRejected = 0
@@ -31,8 +31,11 @@ local is_receiving = false
 
 
 local symbols_map = {
-	",": "，",
-	".": "。",
+	[";"] = "；",
+	[","] = "，",
+	["."] = "。",
+	["?"] = "？",
+	["/"] = "、",
 }
 
 --function init(env)
@@ -46,7 +49,6 @@ local symbols_map = {
 --end
 
 local function select_and_confirm(engine, index)
-	index = index - 1
 	if index<0 then
 		index = 0
 	end
@@ -63,28 +65,40 @@ local function select_and_confirm(engine, index)
 end
 
 local function handle(engine, command)
+--	lw("command part is: "..command)
 	local context = engine.context
 	local input_code = context.input
 	local len = string.len(string.gsub(input_code, '_', ''))
 	local choose = tonumber(string.sub(command, 1, 1))
 	local symbol = string.sub(command, 2)
-	if symbol then
-		select_and_conform(engine, choose)
-		engine:commit_text(symbols_map[symbol])
+	if not choose or choose=="" then
 		return
 	end
-	if len%2==1 then
+	if symbol and symbol~="" then
+		select_and_confirm(engine, choose)
+		s = symbols_map[symbol]
+		if not s then
+			return lw("Symbol to commit not found in map.")
+		end
+		engine:commit_text(s)
+		return
+	end
+	if len==1 then
 		select_and_confirm(engine, choose)
 		return
 	end
-	if len==4 and choose~=1 then
-		select_and_confirm(engine, choose)
+	if len==4 and choose==0 then
+		select_and_confirm(engine, 0)
 		return
 	end
-	if choose>0 then
-		select_and_confirm(engine, choose)
+	if len==0 and choose==1 then
+		engine:commit_text(' ')
 		return
 	end
+	if choose==0 then
+		return
+	end
+	select_and_confirm(engine, choose-1)
 end
 
 function func(key_event, env)
