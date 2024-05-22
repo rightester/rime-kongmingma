@@ -53,15 +53,15 @@ local function select_and_confirm(engine, index)
 		index = 0
 	end
 	local context = engine.context
-	if context:select(index) then
-		local cand = context:get_selected_candidate()
-		if cand then
-			engine:commit_text(cand.text)
-			clear_context_first = true
-		else
-			-- confirm last valid cand text and remove the used part of input_code
-		end
+	if not context:select(index) then
+		return
 	end
+	local cand = context:get_selected_candidate()
+	if not cand then
+		return
+	end
+	engine:commit_text(cand.text)
+	clear_context_first = true
 end
 
 local function handle(engine, command)
@@ -110,10 +110,23 @@ function func(key_event, env)
 	local engine = env.engine
 	local context = engine.context
 	
---	if context:is_composing() then
---		local text = context.composition:back():get_candidate_at(0).text
---		if text then last_first_cand_text = text end
---	end
+	-- auto_select topup function part
+	if context:is_composing() then
+		if (#context.input)%2==0 then
+			local cand = context.composition:back():get_candidate_at(0)
+			if cand then
+				last_first_cand_text = cand.text
+--				lw("current first cand is: " .. cand.text)
+				if context.composition:back():get_candidate_at(1)==nil then
+					select_and_confirm(engine, 0)
+				end
+			else
+				engine:commit_text(last_first_cand_text)
+				last_first_cand_text = ""
+				context.input = string.sub(context.input, -2)
+			end
+		end
+	end
 	
 	
 	if key_event:eq(delimeter_key) then

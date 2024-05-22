@@ -70,8 +70,7 @@ engine:
 
 
 speller:
-  auto_select: true
-#  auto_select: false
+  auto_select: false
   alphabet: QWERTYUIOPASDFGHJKL:ZXCVBNM<>?qwertyuiopasdfghjkl;zxcvbnm,./1234567890_~!@%&*'"
 
 
