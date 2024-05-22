@@ -48,15 +48,22 @@ local symbols_map = {
 --	end
 --end
 
-local function select_and_confirm(engine, index)
+local function choose_and_commit(engine, index)
 	if index<0 then
 		index = 0
 	end
 	local context = engine.context
-	if not context:select(index) then
+	-- WRONG!!!!!!!!
+--	if not context:select(index) then
+--		return
+--	end
+--	local cand = context:get_selected_candidate()
+	-- WRONG!!!!!!!!
+	local b = context.composition:back()
+	if not b then
 		return
 	end
-	local cand = context:get_selected_candidate()
+	cand = b:get_candidate_at(index)
 	if not cand then
 		return
 	end
@@ -75,7 +82,7 @@ local function handle(engine, command)
 		return
 	end
 	if symbol and symbol~="" then
-		select_and_confirm(engine, choose)
+		choose_and_commit(engine, choose)
 		s = symbols_map[symbol]
 		if not s then
 			return lw("Symbol to commit not found in map.")
@@ -84,11 +91,11 @@ local function handle(engine, command)
 		return
 	end
 	if len==1 then
-		select_and_confirm(engine, choose)
+		context:select(choose)
 		return
 	end
 	if len==4 and choose==0 then
-		select_and_confirm(engine, 0)
+		choose_and_commit(engine, 0)
 		return
 	end
 	if len==4 and choose==1 then
@@ -101,17 +108,17 @@ local function handle(engine, command)
 	if choose==0 then
 		return
 	end
-	select_and_confirm(engine, choose-1)
+	context:select(choose-1)
 end
 
 function func(key_event, env)
+	local engine = env.engine
+	local context = engine.context
+	
 	if clear_context_first then
 		context:clear()
 		clear_context_first = false
-		return kNoop
 	end
-	local engine = env.engine
-	local context = engine.context
 	
 	-- auto_select topup function part
 	if context:is_composing() then
@@ -121,7 +128,7 @@ function func(key_event, env)
 				last_first_cand_text = cand.text
 --				lw("current first cand is: " .. cand.text)
 				if context.composition:back():get_candidate_at(1)==nil then
-					select_and_confirm(engine, 0)
+					choose_and_commit(engine, 0)
 				end
 			else
 				if last_first_cand_text~="" then
