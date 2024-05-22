@@ -91,6 +91,9 @@ local function handle(engine, command)
 		select_and_confirm(engine, 0)
 		return
 	end
+	if len==4 and choose==1 then
+		return
+	end
 	if len==0 and choose==1 then
 		engine:commit_text(' ')
 		return
