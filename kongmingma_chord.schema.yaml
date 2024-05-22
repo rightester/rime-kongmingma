@@ -45,13 +45,12 @@ engine:
   processors:
     - lua_processor@*disable_soft_cursor
     - ascii_composer
-    - chord_composer
     - lua_processor@*chord_command_handler
     - recognizer
+    - chord_composer
     - speller
     - key_binder
     - selector
-    - navigator
     - express_editor
   segmentors:
     - matcher

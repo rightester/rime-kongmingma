@@ -124,9 +124,11 @@ function func(key_event, env)
 					select_and_confirm(engine, 0)
 				end
 			else
-				engine:commit_text(last_first_cand_text)
-				last_first_cand_text = ""
-				context.input = string.sub(context.input, -2)
+				if last_first_cand_text~="" then
+					engine:commit_text(last_first_cand_text)
+					last_first_cand_text = ""
+					context.input = string.sub(context.input, -2)
+				end
 			end
 		end
 	end
@@ -137,6 +139,7 @@ function func(key_event, env)
 		if not is_receiving then
 			local command_str = table.concat(command_reprs)
 			handle(engine, command_str)
+			last_first_cand_text = ""
 			command_reprs = {}
 		end
 		return kAccepted
