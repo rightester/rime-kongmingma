@@ -48,8 +48,8 @@ engine:
     - lua_processor@*chord_command_handler
     - recognizer
     - chord_composer
-    - speller
     - key_binder
+    - speller
     - selector
     - express_editor
   segmentors:

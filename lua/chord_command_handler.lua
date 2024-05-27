@@ -20,9 +20,13 @@ local kResultMap = {[0]=kRejected, kAccepted, kNoop, [false]=kRejected, [true]=k
 local kResultStr = {[0]="kRejected", "kAccepted", "kNoop"}
 
 
+local kBar = KeyEvent('bar')
+local kBackspace = KeyEvent('Backspace')
+local kDelete = KeyEvent('Delete')
+local kEscape = KeyEvent('Escape')
+local kSpace = KeyEvent('space')
 
-local delimeter_key = KeyEvent('bar')
-delimeter_key.modifier = 0x00
+local delimeter_key = kBar
 
 local clear_context_first = false
 local last_first_cand_text = ""
@@ -88,6 +92,7 @@ local function handle(engine, command)
 			return lw("Symbol to commit not found in map.")
 		end
 		engine:commit_text(s)
+		context:clear()
 		return
 	end
 	if len==1 then
@@ -95,7 +100,8 @@ local function handle(engine, command)
 		return
 	end
 	if len==4 and choose==0 then
-		choose_and_commit(engine, 0)
+--		choose_and_commit(engine, 0)
+		context:select(0)
 		return
 	end
 	if len==4 and choose==1 then
@@ -138,6 +144,10 @@ function func(key_event, env)
 				end
 			end
 		end
+	end
+	
+	if key_event:eq(kBackspace) or key_event:eq(kEscape) or key_event:eq(kDelete) or key_event:eq(kSpace) then
+		last_first_cand_text = ""
 	end
 	
 	
