@@ -70,7 +70,7 @@ engine:
 
 speller:
   auto_select: false
-  alphabet: QWERTYUIOPASDFGHJKL:ZXCVBNM<>?qwertyuiopasdfghjkl;zxcvbnm,./1234567890_~!@%&*'"
+  alphabet: QWERTYUIOPASDFGHJKL:ZXCVBNM<>?qwertyuiopasdfghjkl;zxcvbnm,./1234567890_~!@%&*'"`
 
 
 recognizer:
@@ -207,13 +207,7 @@ chord_composer:
   
 #  finish_chord_on_first_key_release: true #有一键被释放时立刻触发合成
   
-  alphabet: qazwsxedcrfvtgb12345yhnujmik,ol.p;/67890'=[`\-{space}]
-#  alphabet: qazwsxedcrfvtgb12345yhnujmik,ol.p;/67890'=`[ -\]
-# qazwsxedcrfvtgb
-# 12345
-# yhnujmik,ol.p;/
-# 67890
-# '=`[ -\]
+  alphabet: qazwsxedcrfvtgb12345yhnujmik,ol.p;/67890'=`[ -\]
   
   algebra:
   
@@ -264,7 +258,7 @@ chord_composer:
     - xform/([yuiophjklAnmCXZ67890]+)/<$1>/
     
     # 包装空格区编码
-      # 包裹成： <"左左_><"_右右><"左左_右右>、<"中><"左左中><"中右右><"左左中右右>的形式，从这些例子来： 一_二__二_一 、 一_二_中 、 中_二_一 、 一_ 二_中_二_一 、 _二_一 、 一_二_ 、 中  这些形式里变换
+      # 包裹成： <"左左_><"_右右><"左左_右右> <"中><"左左中><"中右右><"左左中右右> 的形式，从这些形式变换来： 一_二__二_一 、 一_二_中 、 中_二_一 、 一_ 二_中_二_一 、 _二_一 、 一_二_ 、 中
     - xform/([_中一二三四五]+)/<"$1>/
       # 处理只存在左或右的情况
     - xform/<"(.*)_>/<"$1::>/
@@ -318,12 +312,14 @@ chord_composer:
       #
     - xform=(<zf>|<jZ>)=Z=
     - xform=(<xd>|<kX>)=X=
-    - xform=(<xf>|<jX>)=X=
-#    - xform=(<ac>|<CA>)=C=
+#    - xform=(<xf>|<jX>)=X=
     - xform=(<cf>|<jC>)=C=
+#    - xform=(<ac>|<CA>)=C=
+#    - xform=(<cg>|<hC>)=C=
     - xform=(<zs>|<lZ>)=V=
 #    - xform=(<db>|<nk>)=V=
     - xform=(<qw>|<op>)=B=
+    - xform=(<ab>|<nA>)=B=
     - xform=(<wd>|<ko>)=N=
     - xform=(<se>|<il>)=M=
     - xform=(<at>|<yA>)=<=
@@ -392,13 +388,13 @@ chord_composer:
     
     - xform=(<wer>)=8=
     - xform=(<sdf>)=7=
-    - xform=(<asdf>)=0=
     - xform=(<xcv>)=9=
+    - xform=(<asdf>)=0=
     
     - xform=(<uio>)=~=
     - xform=(<jkl>)=`=
+    - xform=(<mCX>)=!=
     - xform=(<jkl;>)=@=
-#    - xform=(<mCX>)=_=
 
 
     # 主映射区结束
@@ -410,7 +406,7 @@ chord_composer:
     ########################################
 
     
-    - xform/^UU(<"无>)$/ /
+    - xform/^UU<"无>$/ /
     - xform/^1i$/<"1>/
     - xform/^2i$/<"2>/
     - xform/^3i$/<"3>/
