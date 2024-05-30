@@ -150,6 +150,10 @@ function func(key_event, env)
 		last_first_cand_text = ""
 	end
 	
+	if key_event:eq(KeyEvent("Control+z")) then
+		last_first_cand_text = ""
+		context:clear()
+	end
 	
 	if key_event:eq(delimeter_key) then
 		is_receiving = not is_receiving
