@@ -46,8 +46,8 @@ def process_file(file):
 	with open(dst_file, 'w', encoding='utf-8') as dst_file:
 		dst_file.write("# encoding: utf-8\n\nchord_composer:\n  algebra:\n")
 		for zf, v in zf_map:
-			zf = zf.translate(map1)
 			zf = chord_sort(zf, chord_composer_sort)
+			zf = zf.translate(map1)
 			delim = ''
 			for d in projection_prefferred_delimiters:
 				if (not d in zf) and (not d in v):

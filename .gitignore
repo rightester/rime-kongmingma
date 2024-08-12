@@ -38,3 +38,4 @@ flypy_light.*.yaml
 #kmm.*.yaml
 kongmingma*dict*
 kongmingma_phony*
+/*.db

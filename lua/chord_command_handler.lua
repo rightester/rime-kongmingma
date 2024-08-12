@@ -21,7 +21,7 @@ local kResultStr = {[0]="kRejected", "kAccepted", "kNoop"}
 
 
 local kBar = KeyEvent('bar')
-local kBackspace = KeyEvent('Backspace')
+local kBackspace = KeyEvent('BackSpace')
 local kDelete = KeyEvent('Delete')
 local kEscape = KeyEvent('Escape')
 local kSpace = KeyEvent('space')
@@ -82,7 +82,7 @@ local function handle(engine, command)
 	local len = string.len(string.gsub(input_code, '_', ''))
 	local choose = tonumber(string.sub(command, 1, 1))
 	local symbol = string.sub(command, 2)
-	if not choose or choose=="" then
+	if not choose then
 		return
 	end
 	if symbol and symbol~="" then
@@ -97,6 +97,14 @@ local function handle(engine, command)
 	end
 	if len==1 then
 		context:select(choose)
+		return
+	end
+	if len==3 and choose==0 then
+--		choose_and_commit(engine, 0)
+		context:select(0)
+		return
+	end
+	if len==3 and choose==1 then
 		return
 	end
 	if len==4 and choose==0 then
