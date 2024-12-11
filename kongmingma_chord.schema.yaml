@@ -28,8 +28,8 @@ schema:
     - phony_kongmingma_part01_sym
     - phony_kongmingma_part02+03
     - phony_kongmingma_part04
-    - phony_kongmingma_part05
-    - phony_kongmingma_part06
+#    - phony_kongmingma_part05
+#    - phony_kongmingma_part06
     - phony_kongmingma_part99
     - *reverse_lookup_schema
 
@@ -49,6 +49,7 @@ engine:
     - recognizer
     - chord_composer
     - key_binder
+    - lua_processor@*shiftedkey_rejector
     - speller
     - selector
     - express_editor
@@ -63,7 +64,7 @@ engine:
     - table_translator@tmp_en_mode
   filters:
     - lua_filter@reverse_lookup_filter_when_tmp_schema_mode
-    - lua_filter@char_first_cands_sort_filter
+    - lua_filter@*char_cands_popper
     - lua_filter@ensure_uniquifier
 
 
@@ -113,8 +114,8 @@ reverse_lookup_filter_when_tmp_schema_mode:
     - kongmingma_part01_sym
     - kongmingma_part02+03
     - kongmingma_part04
-    - kongmingma_part05
-    - kongmingma_part06
+#    - kongmingma_part05
+#    - kongmingma_part06
     - kongmingma_part99
 
 
@@ -190,7 +191,8 @@ kongmingma_part99:
 
 chord_composer:
   
-  finish_chord_on_first_key_release: true #有一键被释放时立刻触发合成
+#  finish_chord_on_first_key_release: true #有一键被释放时立刻触发合成
+  finish_chord_on_first_key_release: false
 
   __include: chord_composer.yaml:/自定义
 

@@ -155,20 +155,6 @@ end
 
 
 
---  tags: [ temp_schema_tag ]
-function char_first_cands_sort_filter(cands)
-    local cands_part2 = {}
-    for cand in cands:iter() do
-        if utf8.len(cand.text) == 1 then
-            yield(cand)
-        else
-            table.insert(cands_part2, cand)
-        end
-    end
-	for i, cand in ipairs(cands_part2) do
-		yield(cand)
-	end
-end
 
 --  tags: [ temp_schema_tag ]
 function insert_repeat_cand_when_tmp_schema_mode(cands, env)

@@ -13,25 +13,28 @@
       # 声明空格所用的按键和其易于表达的变换编码
       # 增加空格还需在前面的字母表（允许接受并击的按键列表）中期添加
       
-    - xform|'|一_| # 左手空格
-    - xform|=|二_| # 左手次空格
+    - xform| |一_| # 左手空格
+    - xform|-|二_| # 左手次空格
 #    - xform|`|三_| # 左手三空格
-#    - xform|[|四_| # 左手四空格
+#    - xform|\[|四_| # 左手四空格
+    - xform|\[|一_|
 
 
-    - xform| |_一| # 右手空格
-    - xform|-|_二| # 右手次空格
+    - xform|'|_一| # 右手空格
+    - xform|=|_二| # 右手次空格
 #    - xform|\\|_三| # 右手三空格
-#    - xform|]|_四| # 右手四空格
+#    - xform|\]|_四| # 右手四空格
+    - xform|\]|_一|
 
-    - xform|`|中| # 中间的空格
-    - xform|\\|中| # 中间的空格
+#    - xform|`|中| # 中间的空格
+#    - xform|\\|中| # 中间的空格
 
     # 处理多键映射至同一的空格编码的重复编码
     - xform/(中)+/中/
     
     #
     
+    - xform/(二_)?|(_二)?/$2$1/
     #上面这部分可以放在外部配置，读取了再插入chord_composer
     
     
@@ -77,16 +80,27 @@
 #    - xform=(<qv>|<mp>|<qg>|<hp>|<sef>|<jil>)=Q=  # 可以写成这样
 #    - xform_<qv>|<mp>_Q_
 #    - xform=(<qv>|<mp>)=Q=
-    - xform=(<qg>|<hp>)=Q=
-#    - xform=(<sef>|<jil>)=Q=
+#    - xform=(<qg>|<hp>)=Q=
+    - xform=(<sef>|<jil>)=Q=
+#    - xform=(<awf>|<joA>)=Q=
     - xform=(<wv>|<mo>)=W=
-    - xform=(<ev>|<mi>)=E=
+#    - xform=(<ev>|<mi>)=E=
 #    - xform=(<eg>|<hi>)=E=
+#    - xform=(<wef>|<jio>)=E=
+#    - xform=(<ser>|<uil>)=E=
+    - xform=(<xdf>|<jkX>)=E=
     - xform=(<et>|<yi>)=R=
-    - xform=(<qt>|<yp>)=T=
+#    - xform=(<qt>|<yp>)=T=
+#    - xform=(<wer>|<uio>)=T=
+#    - xform=(<awe>|<ioA>)=T=
+    - xform=(<awf>|<joA>)=T=
+#    - xform=(<awg>|<hoA>)=T=
     - xform=(<wg>|<ho>)=Y=
-    - xform=(<wt>|<yo>)=U=
+#    - xform=(<wt>|<yo>)=U=
 #    - xform=(<ser>|<uil>)=U=
+#    - xform=(<weg>|<hio>)=U=
+#    - xform=(<wer>|<uio>)=U=
+    - xform=(<wef>|<jio>)=U=
     - xform=(<eg>|<hi>)=I=
 #    - xform=(<wef>|<jio>)=I=
 #    - xform=(<qw>|<op>)=I=
@@ -101,22 +115,31 @@
     - xform=(<sg>|<hl>)=F=
     - xform=(<dg>|<hk>)=G=
     - xform=(<ar>|<uA>)=H=
-    - xform=(<xf>|<jX>)=J=
-    - xform=(<db>|<nk>)=J=
+#    - xform=(<xf>|<jX>)=J=
+#    - xform=(<db>|<nk>)=J=
+#    - xform=(<wef>|<jio>)=J=
+    - xform=(<wdf>|<jko>)=J=
     - xform=(<dr>|<uk>)=K=
     - xform=(<wf>|<jo>)=L=
     - xform=(<as>|<lA>)=:=
       #
-    - xform=(<zf>|<jZ>)=Z=
+#    - xform=(<zf>|<jZ>)=Z=
+    - xform=(<sdf>|<jkl>)=Z=
     - xform=(<xd>|<kX>)=X=
 #    - xform=(<xf>|<jX>)=X=
+#    - xform=(<sef>|<jil>)=X=
+#    - xform=(<zf>|<jZ>)=X=
     - xform=(<cf>|<jC>)=C=
+#    - xform=(<xdf>|<jkX>)=C=
 #    - xform=(<ac>|<CA>)=C=
 #    - xform=(<cg>|<hC>)=C=
-    - xform=(<zs>|<lZ>)=V=
-#    - xform=(<db>|<nk>)=V=
+#    - xform=(<zs>|<lZ>)=V=
+    - xform=(<sdv>|<mkl>)=V=
 #    - xform=(<qw>|<op>)=B=
-    - xform=(<ab>|<nA>)=B=
+#    - xform=(<ab>|<nA>)=B=
+#    - xform=(<xdf>|<jkX>)=B=
+#    - xform=(<xdv>|<mkX>)=B=
+    - xform=(<asv>|<mlA>)=B=
     - xform=(<wd>|<ko>)=N=
     - xform=(<se>|<il>)=M=
     - xform=(<at>|<yA>)=<=
@@ -147,6 +170,7 @@
     - xform=(<af>|<jA>)=;=
       #
     - xform=(<z>|<Z>)=z=
+    - xform=(<rg>|<hu>)=z=
     - xform=(<x>|<X>)=x=
     - xform=(<c>|<C>)=c=
     - xform=(<v>|<m>)=v=
