@@ -4,8 +4,13 @@ build/
 logs/
 preview/
 icons/
+sync/
 installation.yaml
 user.yaml
+
+# Rime's Default Files
+!default.custom.yaml
+
 
 # Rime distribution's files and custom files
 weasel*
@@ -39,3 +44,4 @@ flypy_light.*.yaml
 kongmingma*dict*
 kongmingma_phony*
 /*.db
+
