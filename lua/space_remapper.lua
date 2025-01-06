@@ -32,6 +32,18 @@ function func(key_event, env)
 	if env.engine.context:is_composing() then
 		return kNoop
 	end
+--	if key_event:eq(KeyEvent("space")) then return kRejected end
+--	if key_event:eq(KeyEvent("equal")) then return kRejected end
+--	if key_event:eq(KeyEvent("minus")) then return kRejected end
+--	if key_event:eq(KeyEvent("backslash")) then return kRejected end
+--	if key_event:eq(KeyEvent("grave")) then return kRejected end
+--	if key_event:eq(KeyEvent("bracketleft")) then return kRejected end
+--	if key_event:eq(KeyEvent("bracketright")) then return kRejected end
+	
+	if key_event:eq(KeyEvent("Shift+space")) then
+		env.engine:commit_text("'")
+		return kAccepted
+	end 
 	if env.engine.context:get_option("ascii_mode") == false then
 		return kNoop
 	end
@@ -39,10 +51,6 @@ function func(key_event, env)
 		env.engine:commit_text(" ")
 		return kAccepted
 	end
-	if key_event:repr()=="Shift+space" then
-		env.engine:commit_text("'")
-		return
-	end 
 	return kNoop
 end
 

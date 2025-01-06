@@ -209,7 +209,7 @@ function force_select(cands, env)
 	
 end
 ]]--
-
+--[[
 function reverse_lookup_filter_when_tmp_schema_mode(cands, env)
 	if env.reverse_lookup_handles == nil then
 		reverse_lookup_handles = {}
@@ -251,8 +251,8 @@ function reverse_lookup_filter_when_tmp_schema_mode(cands, env)
 		yield(cand)
 	end
 end
-
-
+]]--
+--[[
 function ensure_uniquifier(cands, env)
 	local history_cands = {}
 	local is_cand_repeated = false
@@ -271,19 +271,19 @@ function ensure_uniquifier(cands, env)
 		end
 	end
 end
+]]--
 
 
-
-function show_cand_info(cands, env)
-	local comment = ""
-	local is_first_cand = false
-	for cand in cands:iter() do
-		if is_first_cand then
-			yield(EMPTY_CAND)
-			is_first_cand = false
-		end
-		local comment = cand.comment .. "  type:" .. cand.type .. ", start:" .. tostring(cand.start) .. ", end:" .. tostring(cand._end) .. ", text:" .. cand.text
-		local c = Candidate(cand.type, cand.start, cand._end, cand.text, comment)
-		yield(c)
-	end
-end
+--function show_cand_info(cands, env)
+--	local comment = ""
+--	local is_first_cand = false
+--	for cand in cands:iter() do
+--		if is_first_cand then
+--			yield(EMPTY_CAND)
+--			is_first_cand = false
+--		end
+--		local comment = cand.comment .. "  type:" .. cand.type .. ", start:" .. tostring(cand.start) .. ", end:" .. tostring(cand._end) .. ", text:" .. cand.text
+--		local c = Candidate(cand.type, cand.start, cand._end, cand.text, comment)
+--		yield(c)
+--	end
+--end

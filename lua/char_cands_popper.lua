@@ -30,14 +30,14 @@ local lw = function(...) end
 --end
 
 
---  tags: [ temp_schema_tag ]
+
 function func(cands)
-	local flag = true
+	local once_only_flag = true
     local cands_part2 = {}
     for cand in cands:iter() do
-        if flag and utf8.len(cand.text) == 1 then
+        if once_only_flag and utf8.len(cand.text) == 1 then
             yield(cand)
-            flag = false
+            once_only_flag = false
         else
             table.insert(cands_part2, cand)
         end

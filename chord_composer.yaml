@@ -2,7 +2,7 @@
 
 自定义:
 
-  alphabet: qazwsxedcrfvtgb12345yhnujmik,ol.p;/67890'=`[- \]
+  alphabet: qazwsxedcrfvtgb12345yhnujmik,ol.p;/67890'-`[= \]
 
   algebra:
   
@@ -34,7 +34,7 @@
     
     #
     
-    - xform/(二_)?|(_二)?/$2$1/
+#    - xform/(二_)?(_二)?/$2$1/
     #上面这部分可以放在外部配置，读取了再插入chord_composer
     
     
@@ -96,6 +96,7 @@
     - xform=(<awf>|<joA>)=T=
 #    - xform=(<awg>|<hoA>)=T=
     - xform=(<wg>|<ho>)=Y=
+    - xform=(<wev>|<mio>)=Y=
 #    - xform=(<wt>|<yo>)=U=
 #    - xform=(<ser>|<uil>)=U=
 #    - xform=(<weg>|<hio>)=U=

@@ -44,8 +44,9 @@ switches:
 engine:
   processors:
     - lua_processor@*disable_soft_cursor
-    - ascii_composer
     - lua_processor@*chord_command_handler
+    - ascii_composer
+    - lua_processor@*mode_helper
     - recognizer
     - chord_composer
     - key_binder
@@ -56,16 +57,28 @@ engine:
   segmentors:
     - matcher
     - abc_segmentor
+    - affix_segmentor@ii_mode_prompt
+    - affix_segmentor@ii_mode
     - affix_segmentor@tmp_schema_mode
     - affix_segmentor@tmp_en_mode
   translators:
-    - lua_translator@*main_translator
+    - table_translator@ii_mode
+#    - lua_translator@*ii_mode_translator
     - table_translator@tmp_schema_mode
     - table_translator@tmp_en_mode
+    - lua_translator@*main_translator
   filters:
-    - lua_filter@reverse_lookup_filter_when_tmp_schema_mode
+    - lua_filter@*reverse_lookup_filter_when_tmp_schema_mode@reverse_lookup_filter_when_tmp_schema_mode
     - lua_filter@*char_cands_popper
-    - lua_filter@ensure_uniquifier
+    - lua_filter@*ensure_uniquifier
+
+
+
+
+chord_composer:
+#  finish_chord_on_first_key_release: true #有一键被释放时立刻触发合成
+  finish_chord_on_first_key_release: false
+  __include: chord_composer.yaml:/自定义
 
 
 speller:
@@ -76,8 +89,44 @@ speller:
 recognizer:
   patterns:
     dbl_slash_pattern: ^(//).*$
+#    dbl_semicolon_pattern: ^(;;).*$
     dbl_semicolon_pattern: ^([?]{2}).*$
-    ii_pattern: ^(ii).*$
+    ii_pattern: ^(ii).+$
+    ii_prompt_pattern: ^(ii).*$
+
+
+ii_mode_prompt:
+  tag: ii_prompt_pattern
+  prefix: "ii"
+  tips: 〔 字形输入 〕
+#  dictionary: ""
+#  enable_user_dict: false
+  
+ii_mode:
+  tag: ii_pattern
+#  prefix: "ii"
+  extra_tags:
+    - ii_mode
+  ####
+  dictionary: kongmingma_part01_ii
+  enable_encoder: false
+  enable_sentence: false
+  enable_user_dict: false
+#  enable_completion: false
+
+
+tmp_schema_mode:
+  tag: dbl_slash_pattern
+  prefix: "//"
+  tips: 〔 反查方案 〕
+  extra_tags:
+    - tmp_schema_mode
+  ####
+  dictionary: *reverse_lookup_dict
+  enable_encoder: false
+  enable_sentence: false
+  enable_user_dict: false
+#  enable_completion: false
 
 
 tmp_en_mode:
@@ -91,21 +140,8 @@ tmp_en_mode:
   enable_user_dict: false
 
 
-tmp_schema_mode:
-  tag: dbl_slash_pattern
-  prefix: "//"
-  tips: 〔 反查方案 〕
-  extra_tags:
-    - tmp_schema_mode
-  ####
-  dictionary: *reverse_lookup_dict
-  enable_sentence: false
-  enable_encoder: false
-  enable_user_dict: false
-
-
 reverse_lookup_filter_when_tmp_schema_mode:
-  tags: [ tmp_schema_mode ]
+  tags: [ tmp_schema_mode, ii_pattern ]
   dicts_to_reverse_lookup:
     - kongmingma_part_user
     - kongmingma_part00
@@ -113,13 +149,24 @@ reverse_lookup_filter_when_tmp_schema_mode:
     - kongmingma_part01_ii
     - kongmingma_part01_sym
     - kongmingma_part02+03
+#    - kongmingma_part04
+#    - kongmingma_part05
+#    - kongmingma_part06
+#    - kongmingma_part99
+
+
+translator:
+  dictionaries:
+    - kongmingma_part_user
+    - kongmingma_part00
+    - kongmingma_part01_char
+#    - kongmingma_part01_ii
+    - kongmingma_part01_sym
+    - kongmingma_part02+03
     - kongmingma_part04
 #    - kongmingma_part05
 #    - kongmingma_part06
     - kongmingma_part99
-
-
-
 
 
 # 拆分词典和翻译器
@@ -130,6 +177,7 @@ kongmingma_part_user:
   enable_encoder: false
   enable_sentence: false
   enable_user_dict: false
+  enable_completion: false
   initial_quality: 99
 
 kongmingma_part00:
@@ -137,64 +185,67 @@ kongmingma_part00:
   enable_encoder: false
   enable_sentence: false
   enable_user_dict: false
+  enable_completion: false
 
 kongmingma_part01_char:
   dictionary: kongmingma_part01_char
-  enable_sentence: false
   enable_encoder: false
+  enable_sentence: false
   enable_user_dict: false
+  enable_completion: false
 
 kongmingma_part01_ii:
   dictionary: kongmingma_part01_ii
   enable_encoder: false
   enable_sentence: false
   enable_user_dict: false
+  enable_completion: false
 
 kongmingma_part01_sym:
   dictionary: kongmingma_part01_sym
   enable_encoder: false
   enable_sentence: false
   enable_user_dict: false
+  enable_completion: false
 
 kongmingma_part02+03:
   dictionary: kongmingma_part02+03
   enable_encoder: false
   enable_sentence: false
   enable_user_dict: false
+  enable_completion: false
 
 kongmingma_part04:
   dictionary: kongmingma_part04
   enable_encoder: false
   enable_sentence: false
   enable_user_dict: false
+  enable_completion: false
 
 kongmingma_part05:
   dictionary: kongmingma_part05
   enable_encoder: false
   enable_sentence: false
   enable_user_dict: false
+  enable_completion: false
 
 kongmingma_part06:
   dictionary: kongmingma_part06
   enable_encoder: false
   enable_sentence: false
   enable_user_dict: false
+  enable_completion: false
   
 kongmingma_part99:
   dictionary: kongmingma_part99
   enable_encoder: false
   enable_sentence: false
   enable_user_dict: false
+  enable_completion: false
 
 
 
 
-chord_composer:
-  
-#  finish_chord_on_first_key_release: true #有一键被释放时立刻触发合成
-  finish_chord_on_first_key_release: false
-
-  __include: chord_composer.yaml:/自定义
 
 
 

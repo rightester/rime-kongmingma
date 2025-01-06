@@ -7,8 +7,15 @@ schema:
   description: 用于词典部署
 
 engine:
+  processors:
+    - speller
   translators:
     - table_translator
+
+speller:
+  algebra:
+    - xform/^i/ii/
+#    - xform/^i//
 
 translator:
   dictionary: kongmingma_part01_ii

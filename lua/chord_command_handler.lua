@@ -61,6 +61,8 @@ local symbols_map = {
 --	end
 --end
 
+
+
 local function choose_and_commit(engine, index)
 	if index<0 then
 		index = 0
@@ -83,6 +85,16 @@ local function choose_and_commit(engine, index)
 	engine:commit_text(cand.text)
 	clear_context_first = true
 end
+
+
+
+
+
+
+
+
+
+
 
 local function handle(engine, command)
 --	lw("command part is: "..command)
@@ -134,9 +146,30 @@ local function handle(engine, command)
 	context:select(choose-1)
 end
 
+
+
+
+
+
+
+
+
+
+
+
 function func(key_event, env)
 	local engine = env.engine
 	local context = engine.context
+	local segment = context.composition:back()
+	
+	if context:get_option("ascii_mode") == true then
+		last_first_cand_text = ""
+		return kNoop
+	end
+	
+	if segment and (segment:has_tag("tmp_schema_mode") or segment:has_tag("ii_mode") or segment:has_tag("ii_pattern")) then
+		last_first_cand_text = ""
+	end
 	
 	if clear_context_first then
 		context:clear()
@@ -150,8 +183,13 @@ function func(key_event, env)
 			if cand then
 				last_first_cand_text = cand.text
 --				lw("current first cand is: " .. cand.text)
-				if context.composition:back():get_candidate_at(1)==nil then
-					choose_and_commit(engine, 0)
+				if segment and (segment:has_tag("tmp_schema_mode") or segment:has_tag("ii_mode") or segment:has_tag("ii_pattern")) then
+					last_first_cand_text = ""
+				else
+					if segment:get_candidate_at(1)==nil then
+						choose_and_commit(engine, 0)
+						last_first_cand_text = ""
+					end
 				end
 			else
 				if last_first_cand_text~="" then
@@ -171,6 +209,7 @@ function func(key_event, env)
 		last_first_cand_text = ""
 		context:clear()
 	end
+	
 	
 	if key_event:eq(delimeter_key) then
 		is_receiving = not is_receiving
@@ -196,6 +235,17 @@ function func(key_event, env)
 	end
 	return kNoop
 end
+
+
+
+
+
+
+
+
+
+
+
 
 
 return {
