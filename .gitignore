@@ -41,7 +41,7 @@ grammar.yaml
 空明.trime.yaml
 flypy_light.*.yaml
 #kmm.*.yaml
-kongmingma*dict*
+#kongmingma*dict*
 kongmingma_phony*
 /*.db
 

@@ -1,0 +1,433 @@
+
+---
+name: kongmingma_part_user
+version: 2023/08/02
+sort: original
+use_preset_vocabulary: false
+
+#import_tables:
+#  kongmingma_part01
+  
+#columns:
+#  - text #第一列字／词
+#  - code #第二列码
+#  - weight #第三列字／词频
+#  - stem #第四列造词码
+
+#encoder:
+#  rules:
+#    - length_equal: 2 #对于二字词
+#      formula: AaAbBaBb
+#    - length_equal: 3 #对于三字词
+#      formula: AaAbBaCa
+#    - length_in_range: [4, 7] #对于四至五字词
+#      formula: AaBaCaZa
+#  exclude_patterns:
+#    - '^z.*$'
+#  tail_anchor: ^
+...
+
+
+#检测到了y""""""""=	y""""""""=
+#应喵喵	yyyy
+#应1231423喵喵	yyyy|xx|
+#应喵喵2222	yyY_
+
+#应嗷呜	yy_y
+#应喵喵
+
+
+#yyyy|
+#yyyy 上屏 !!!不能!!!!
+#yyyy|xxxx
+
+#yy| 上屏
+#yy
+
+#应		yy| 上屏 （按空格）
+#应		yy+ 不上屏（不按空格）
+#奕奕	yy+yy+ 上屏（两次都不按空格）
+#奕奕	yy+yy| 不上屏（不按一次空格，按一次空格）
+#奕奕y	yy+yy|yy+ ?
+#奕奕y	yy+yy|yy| ?不上屏
+
+
+
+
+#yy	应
+#yyt_	毅
+#yyyy	奕奕
+#u:	西
+
+#应	yy|
+#应	yy+
+#毅	yy+t_
+#奕奕	yy+yy|
+#奕奕	yy+yy+
+#西	u:+
+
+#()	u:!
+#()	yy+!
+#()	yy+yy|!
+
+#奕奕	yyyy
+
+#癔	yy+y_
+
+
+#yy+yy
+#y_+
+#"y_|
+
+#yy+yy+y_+
+#yy+yy+yy+
+
+#亦	yy_t
+
+#呜	oW
+#觉
+
+
+熟悉	SYxr
+成熟	cKSY
+喵呜	mlWL
+叫我最右君	jlWqZ_
+#叫我\n最右君	jlWqZ_
+#叫我\t最右君	jlWqZ_
+着	zI
+了呜	lMWL
+傅立叶	FFly
+寿司郎	ShsL
+粗击	CIjh
+醋鸡	CJj.
+买卖	MM
+后处理	HeCl
+好呜	H,WL
+香堡	xqBf
+的呜	dWWL
+回零	HGll
+嗦住	SLZF
+并击	bijh
+猫呜	MtWL
+啾啾	jljl
+嗦嗦	SLSL
+拱拱	GuGu
+贴贴	tgtg
+雾淞	WLSc
+任务栏	rFWL
+发行版	F,xB
+光速	GFSJ
+削皮	XFp,
+重绘	CqH?
+成就	cK_j
+界面	jgmk
+新建	xyjn
+即时	jnss
+之友	zpYk
+跳过	tlGJ
+优先级	Yfxj
+技术栈	juSZ
+工具链	GjJl
+觉得	JO_D
+净化	jyHF
+大语言	DkYY
+农家菜	NpjC
+心血管	xpXG
+模板	MxBx
+品尝	plCf
+什么	sFm_
+好么	H,m_
+
+
+#呜	2
+#熟悉	2
+#成熟	2
+#喵呜	2
+#叫我最右君	2
+#了呜	2
+#傅立叶	2
+#寿司郎	2
+#粗击	2
+#醋鸡	2
+
+呜	WL
+眼	Yg
+右	Yk
+尔	eT
+显	xs
+含	Hf
+重	Zq
+蚌	bGh
+
+一	yz
+云	YH
+
+菜	CB
+
+#倒	ud
+
+#加减乘除 东西南北 上下左右
+#家重相果报觉今令己已李世
+#术石千计
+#四思六立九加
+#界仅假
+#菜 项下顶 结升 列
+#用 音意 云运远元于迂
+# 对3
+
+
+# 一句话开头用左手单手起，结尾用右手单手结？
+
+
+#；	_a
+#，	_c
+#。	_x
+#、	_z
+
+
+、	,_
+，	_,
+。	vv
+！	:_
+？	_:
+：	;_
+；	_;
+……	v.
+⋯⋯	.v
+——	..
+“	<_
+”	_<
+‘	<_
+’	_<
+（	>_
+）	_>
+《	?_
+》	_?
+［	/_
+］	_/
+｛	/_
+｝	_/
+〈	?_
+〉	_?
+～	,_
+—	_,
+＜	>_
+＞	_>
+
+#《》〈〉
+# “” ‘’
+#「」『』【】
+#（）［］｛｝
+#＜＞ —或者—— ～
+# ⋯⋯ ……
+
+
+极	J_
+即	J_
+尽	_J
+既	_J
+仅	j_
+接	j_
+就	_j
+#久	_j
+及	_j
+#及	j,
+#加
+#减
+而	e_
+嗯	e_
+二	_e
+儿	_e
+呃	E_
+嗯	_E
+难	N_
+男	N_
+#乃	_N
+那	_N
+女	_N
+能	n_
+宁	n_
+你	_n
+#您	_n
+呢	_n
+买	M_
+慢	M_
+卖	_M
+漫	_M
+们	_m
+慢	_m
+么	m_
+每	m_
+和	h_
+何	h_
+化	_h
+嘿	_h
+还	H_
+换	H_
+会	_H
+华	_H
+起	q_
+求	q_
+轻	_q
+#球	_q
+#千	_q
+期	_q
+#请
+去	Q_
+取	Q_
+却	_Q
+#千	_Q
+#期	_Q
+区	_Q
+
+可	_k
+千	_k
+况	k_
+壳	k_
+
+又	_u
+#尤	_u
+尤	u_
+谁	S_
+睡	S_
+事	_S
+首	_S
+是	_s
+时	_s
+失	s_
+视	s_
+#升	s_
+在	z_
+#直	z_
+正	_z
+做	Z_
+住	Z_
+作	_Z
+主	_Z
+装	V_
+坐	V_
+着	_V
+座	_V
+知	v_
+直	v_
+这	_v
+真	_v
+#装	_v
+地	d_
+第	d_
+的	_d
+哒	_d
+当	D_
+带	D_
+得	_D
+#呔	_D
+端	_D
+#闻	W_
+#玩	W_
+#呜	_W
+#武	_W
+勿	W_
+玩	W_
+无	_W
+唔	_W
+
+她	t_
+挑	t_
+他	_t
+特	_t
+它	T_
+拖	T_
+同	_T
+台	_T
+为	w_
+喂	w_
+爬	P_
+婆	_P
+由	i_
+#行	i_
+有	_i
+#奶把
+抱	B_
+报	B_
+必	_B
+包	_B
+把	b_
+#变	b_
+拔	b_
+不	_b
+拨	_b
+于	Y_
+运	Y_
+元	_Y
+远	_Y
+以	y_
+意	y_
+一	_y
+音	_y
+笑	X_
+学	X_
+型	_X
+兴	_X
+写	x_
+系	x_
+形	_x
+#性	_x
+#兴	_x
+#任	r_
+忍	r_
+扔	r_
+人	_r
+仍	_r
+入	R_
+如	R_
+若	_R
+有	_i
+易	_i
+由	i_
+喜	i_
+成	c_
+称	c_
+长	C_
+常	C_
+充	C_
+重	_C
+超	_C
+菜	_c
+放	F_
+凡	F_
+否	_F
+符	_F
+令	L_
+粒	L_
+里	_L
+辆	_L
+立	l_
+离	l_
+了	_l
+脸	_l
+#仁孺忍仍烂溶
+
+#形学息系兴
+#音
+#意
+#衣
+#云
+工	g_
+格	g_
+个	_g
+根	_g
+攻	G_
+古	G_
+共	_G
+故	_G
+哦	O_
+
+#格
+#根
+#工
+#攻
+#故
+#古
+#根
+#格
+#果
